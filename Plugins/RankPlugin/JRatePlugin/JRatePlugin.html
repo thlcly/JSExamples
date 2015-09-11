@@ -1,0 +1,161 @@
+<html>
+	<head>
+		<title>Jrate Plugin Page</title>				
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script type="text/javascript" src="../../../commons/jquery-1.11.0.min.js"></script>
+		<script type="text/javascript" src="jRate.min.js"></script>
+		<script type="text/javascript">
+			
+			$(function(){
+				/*
+				 *	最简单的rate
+				 */			
+				$("#jRate1").jRate();
+
+				/*
+   				 *	添加了开始和结束的rate
+				 */
+				 $("#jRate2").jRate({
+				 	startColor:"cyan",
+				 	endColor:"blue"
+				 });
+
+				 /*
+				  *  添加了已评分星星数量的rate
+				  */
+				 $("#jRate3").jRate({
+				 	//rating:10  //如果设置的值超过星星的总数,则默认所中所有
+				 	rating:2
+				 });
+
+				 /*
+				  *  设置了星星宽度和高度的rate
+				  */
+				  $("#jRate4").jRate({
+				  	width:70,
+				  	height:70
+				  });
+
+				  /*
+				  *  设置显示图案的rate
+				  */
+				  $("#jRate5").jRate({
+				  	//shape:'RHOMBUS'
+				  	//shape:'RECTANGLE'
+				  	//shape:'SQUARE' 
+				  	//shape:'CIRCLE'  
+				  	shape:'STAR' //default
+				  });
+
+
+				  /*
+				  *  使评分图形由小到大变化的rate
+				  */
+				  $("#jRate6").jRate({
+				  	widthGrowth:0.2,
+				  	heightGrowth:0.2
+				  });
+
+				  /*
+				  *  设置图形的数量的rate
+				  */
+				  $("#jRate7").jRate({
+				  	count:10
+				  });
+
+				  /*
+				  *  设置图形背景颜色的rate
+				  */
+				  $("#jRate8").jRate({
+				  	backgroundColor:'black'
+				  });
+
+				  /*
+				  *  设置图形描边颜色的rate
+				  */
+				  $("#jRate9").jRate({
+				  	strokeColor: 'red'
+				  });
+
+
+				  /*
+				   *  设置图形的间隙和透明度
+				   */
+				  $("#jRate10").jRate({
+				  	shapeGap:'10px',
+				  	opacity:0.3
+				  });
+
+				  /*
+				   *  设置图形的最大值和最小值
+				   */
+				  $("#jRate11").jRate({
+				  	shapeGap:'20px',
+				  	min:10,	//用于设置分数值的
+				  	max:15,
+				  	precision: 0, //用于设置分数的精度
+				  	onChange: function(rating) {
+					    $('#demo-onchange-value').text("Your Rating: "+rating);
+					  }
+				  });				 
+
+				  /*
+				   *  设置图形的方向,反向,只读
+				   */
+				  $("#jRate12").jRate({
+				  	horizontal: false,	//设置图形是水平还是竖直,default:水平
+				  	reverse: true,		//设置图形是从哪端为起点,default:左边/上边
+				  	readOnly: false,		//设置图形是否只读,default:false
+				  	onSet: function(rating) {	//当评分星星被点击或设置是的回调函数
+					    $('#demo-onset-value').text("Selected Rating: "+rating);
+					  }
+				  });		
+
+			});
+		</script>
+	</head>
+	<body>
+
+		<div>JRate's official site</div>
+		<a href="http://www.toolitup.com/jRate.html">click here</a>
+
+		<span>最简单的rate</span>		
+		<div id="jRate1"></div>
+		
+		<span>设置了开始和结束颜色的rate</span>
+		<div id="jRate2"></div>
+		
+		<span>设置了初始值的rate</span>
+		<div id="jRate3"></div>
+			
+		<span>自定义评分星星的高度和宽度</span>
+		<div id="jRate4"></div>
+
+		<span>设置评分图案</span>
+		<div id="jRate5"></div>
+
+		<span>使评分图形由小到大变化</span>
+		<div id="jRate6"></div>
+
+		<span>设置图形的数量</span>
+		<div id="jRate7"></div>
+
+		<span>设置图形的背景颜色</span>
+		<div id="jRate8"></div>
+
+		<span>设置图形的描边颜色</span>
+		<div id="jRate9"></div>
+
+		<span>设置图形之间的间隙和透明度</span>		
+		<div id="jRate10"></div>
+
+		<span>设置图形的最大值,最小值,精度和onChage(当评分值改变时的一个回调函数)</span>
+		<div id="jRate11"></div>
+		<div id="demo-onchange-value"></div>
+
+		<span>设置图形的方向,反向,只读</span>
+		<div id="jRate12"></div>
+		<div id="demo-onset-value"></div>
+	</body>
+</html>
+
