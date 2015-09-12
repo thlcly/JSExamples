@@ -1,0 +1,21 @@
+/*使div居中显示*/
+#pic{
+	text-align: center;	/*can be replaced by (width:xxx px)*/
+	margin:0 auto
+}
+
+#btn{
+	width: 40px;
+	height: 40px;
+	position: fixed;	/*元素的定位为固定(以浏览器为参考)*/
+	left: 50%;			/*left可以和margin-left搭配使用(margin-left:以left为边,即往右以left为起点再移动),right可以和margin-right搭配使用*/
+	bottom: 30px;
+	margin-left: 610px;
+	display: none;
+	background:url(top_bg.png) no-repeat left top;	/*left top:图片和父容器的对齐方式,可以设置具体值*/
+}
+
+/*在<a>设置了id之后要用id进行选择*/
+#btn:hover{
+	background:url(top_bg.png) no-repeat left -40px;	
+}
