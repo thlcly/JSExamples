@@ -1,3 +1,7 @@
+/*
+	1.在这里要注意定时器可能会多次开启且如果丢失引用则会不能关闭定时器
+	
+*/
 var scrollToTop = (function(){
 
 	var isCanceled = false;
