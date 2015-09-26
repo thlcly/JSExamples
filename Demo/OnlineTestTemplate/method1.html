@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>online test1</title>
+	<script type="text/javascript" src="../../commons/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("#submit").click(function(){
+				var source = $("#source").val();
+				console.log(source);
+				var result = $('#myframe')
+				$("#target").prop('contentWindow').document.open("text/html","replace");
+				$("#target").prop('contentWindow').document.write(source);
+			});
+		});
+	</script>
+</head>
+<body>
+	<div>
+		<button id="submit">submit</button>
+	</div>
+	<div style="height:1000px;">
+		<div style="width:50%;display:inline;overflow:auto">
+			<textarea id="source" style="width:50%;height:50%"></textarea>
+		</div>
+		<div style="width:50%;display:inline">
+			<iframe src="" style="width:50%;height:50%" id="target"></iframe>
+		</div>
+	</div>	
+</body>
+</html>

@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>count click time</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+	<style type="text/css">
+		img{
+			
+			background-repeat: no-repeat;
+			width: 200px;
+			height: 200px;
+			margin-bottom: 10px;
+		}
+
+		.row{
+			margin-top: 20px;
+
+		}
+
+		div.col-md-2{
+			margin-right: 20px;
+		}
+
+		div.col-md-2 span{
+			position:absolute;
+			top:15px;
+			left:33px;
+			font-size: 20px;
+			color:red;			
+		}
+
+		.tag{
+			margin:0px;
+			padding: 0px;
+			display: inline;
+			width: 300px;
+			height: 300px;
+		}
+
+		.title{
+			text-align: center;
+			font-size: 20px;
+		}
+
+		.show{
+			display: block;
+		}
+
+		.hide{
+			display: none;
+		}
+
+		.borderStyle{
+			border:1px solid red;
+		}
+	</style>
+	<script type="text/javascript" src="jquery.min.js"></script>	
+	<script type="text/javascript">
+		
+		$(function(){			
+		/*	$("div[class='tag']").click(function(){				
+				var $span = $(this).closest("div").find("span");
+				$span.text(parseInt($span.text()) + 1);
+			});*/
+			var addTime = function(event){			
+				var $span = $(this).closest("div").find("span");
+				$span.text(parseInt($span.text()) + 1);
+			}
+
+			var  minusTime = function(event){			
+				var $span = $(this).closest("div").find("span");
+				if($span.text()<=0){
+					return ;
+				}
+				$span.text(parseInt($span.text()) - 1);
+			}
+
+			var reset = function(event){
+				var $span = $(this).closest("div").find("span");			
+				$span.text(0);
+			}
+
+			var changePage = function(){
+				var page = $(this).text();
+				$(this).closest("div").find("button").each(function(){
+					$(this).removeClass("borderStyle");
+				});
+				$(this).addClass("borderStyle");
+				switch(page){
+					case "page1":
+					$("div[class='page1']").show();
+					$("div[class='page2']").hide();
+					$("div[class='page3']").hide();
+					break;
+					case "page2":
+					$("div[class='page1']").hide();
+					$("div[class='page2']").show();
+					$("div[class='page3']").hide();
+					break;
+					case "page3":
+					$("div[class='page1']").hide();
+					$("div[class='page2']").hide();
+					$("div[class='page3']").show();
+					break;
+				}
+			}
+
+			$("img").click(addTime);
+			$("button[name='minus']").click(minusTime);
+			$("button[name='reset']").click(reset);
+			$("button[name='page']").click(changePage);
+
+			$("div[class='page1']").show();
+			$("div[class='page2']").hide();
+			$("div[class='page3']").hide();
+
+
+			//响应键盘点击事件
+			$(document).keyup(function(event){						
+				if(event.keyCode == 37 || event.keyCode == 39){
+					$("button[name='page'][class*='borderStyle']").each(function(){
+						var current = $(this);
+						current.removeClass("borderStyle");						
+
+						//left
+						if(event.keyCode == 37){
+							if(current.prev().length){
+								current.prev().addClass("borderStyle");
+							}else{
+								current.nextAll(":last").addClass("borderStyle");
+							}
+						}else if(event.keyCode == 39){	//right									
+							if(current.next().length){
+								current.next().addClass("borderStyle");
+							}else{								
+								current.prevAll(":last").addClass("borderStyle");
+							}
+						}
+					});	
+
+					$("div[class^='page']:visible").each(function(){
+						var current = $(this);						
+						
+						current.hide();				
+
+						//left
+						if(event.keyCode == 37){
+							if(current.prev("div[class^='page']").length){
+								current.prev().show()
+							}else{
+								current.nextAll("div[class^='page']:last").show();
+							}
+						}else if(event.keyCode == 39){	//right								
+							if(current.next().length){
+								current.next().show();
+							}else{															
+								current.prevAll("div[class^='page']:last").show();
+							}
+						}						
+					});
+				}	
+			});
+		});
+</script>
+</head>
+<body>
+	<div class="container">
+		
+		<div class="row">
+			<div class="col-md-4" style="position:fixed;top:5px;left:90px;z-index:1">
+				<button name="page" class="btn borderStyle">page1</button>
+				<button name="page" class="btn">page2</button>
+				<button name="page" class="btn">page3</button>
+			</div>
+		</div>
+
+		<!-- row 1 -->
+		<div class="page1" style="z-index:0">
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/1-1.jpg">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/1-2.jpg">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/1-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/1-4.jpg">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/1-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- row 2 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/2-1.jpg">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/2-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/2-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/2-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/2-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- row 3 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/3-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/3-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/3-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/3-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/3-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- row 4 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/4-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/4-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/4-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/4-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/4-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- row 5 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/5-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/5-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/5-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/5-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/5-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- row 6 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/6-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/6-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/6-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/6-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/6-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- row 7 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/7-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/7-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/7-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/7-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/7-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- row 8 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/8-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/8-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/8-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/8-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/8-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- row 9 -->
+		<div class="page2" style="z-index:0">
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/9-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/9-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/9-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/9-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/9-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- row 10 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/10-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/10-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/10-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/10-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/10-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- row 11 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/11-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/11-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/11-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/11-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/11-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- row 12 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/12-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/12-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/12-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/12-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/12-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- row 13 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/13-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/13-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/13-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/13-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/13-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- row 14 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/14-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/14-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/14-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/14-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/14-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- row 15 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/15-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/15-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/15-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/15-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/15-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- row 16 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/16-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/16-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/16-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/16-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/16-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- row 17 -->
+		<div class="page3" style="z-index:0">
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/17-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/17-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/17-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/17-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/17-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- row 18 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/18-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/18-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/18-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/18-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/18-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- row 19 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/19-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/19-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/19-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/19-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/19-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- row 20 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/20-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/20-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/20-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/20-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/20-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- row 21 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/21-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/21-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/21-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/21-4.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/21-5.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- row 22 -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/22-1.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/22-2.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="tag">
+						<img src="photo/22-3.png">
+						<button name="minus" class="btn btn-primary">minus one</button>
+						<button name="reset" class="btn btn-danger">reset</button>
+						<span>0</span>
+					</div>
+				</div>			
+			</div>
+		</div>
+	</div>
+</body>
+</html>
