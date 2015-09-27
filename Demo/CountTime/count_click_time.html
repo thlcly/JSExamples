@@ -59,10 +59,7 @@
 	<script type="text/javascript">
 		
 		$(function(){			
-		/*	$("div[class='tag']").click(function(){				
-				var $span = $(this).closest("div").find("span");
-				$span.text(parseInt($span.text()) + 1);
-			});*/
+
 			var addTime = function(event){			
 				var $span = $(this).closest("div").find("span");
 				$span.text(parseInt($span.text()) + 1);
@@ -106,7 +103,7 @@
 				}
 			}
 
-			
+
 
 			//响应键盘点击事件
 			$(document).keyup(function(event){						
@@ -161,11 +158,9 @@
 			for(var i = 1;i<=22;i++){
 				if(i == 9 || i==17){
 					index++;
-					$div.append($page);
-					console.log(index);
+					$div.append($page);				
 					$page = $('<div class="page'+index+'" style="z-index:0">');
-				}
-				console.log($page);
+				}				
 				
 				var $row = $('<div class="row">');
 				for(var j = 1;j<=5;j++){
@@ -173,13 +168,13 @@
 						break;
 					}
 					var $col = $('<div class="col-md-2">'+
-									'<div class="tag">'+
-									'<img src="photo/'+i+'-'+j+'.png">'+
-									'<button name="minus" class="btn btn-primary">minus one</button>'+
-									'<button name="reset" class="btn btn-danger">reset</button>'+
-									'<span>0</span>'+
-									'</div>'+
-								'</div>');
+						'<div class="tag">'+
+						'<img src="photo/'+i+'-'+j+'.png">'+
+						'<button name="minus" class="btn btn-primary">minus one</button>'+
+						'<button name="reset" class="btn btn-danger">reset</button>'+
+						'<span>0</span>'+
+						'</div>'+
+						'</div>');
 					$row.append($col);
 				}
 				$page.append($row);
@@ -196,6 +191,62 @@
 			$("div[class='page2']").hide();
 			$("div[class='page3']").hide();
 
+			/*
+			create file system using localStorage in order to saving data that times of click for each picture
+			*/
+			var storage = window.localStorage;	
+			var data = storage.getItem("data");
+			if(data != null){
+				console.log("start parse");				
+				var obj = $.parseJSON(data);
+				console.log(obj);
+				for(var i = 1;i<=22;i++){
+					for(var j = 1;j<=5;j++){
+						if(i==22 && j==4) break;
+						var $span = $("img[src='photo/"+i+"-"+j+".png']").parent().find("span");
+						$span.text(obj[i+"-"+j]);
+					}
+				}
+			}
+
+			//save data when close the window or click the save button
+
+			//create obj for save click time
+			function timeObj(){}
+
+			var saveData = function(){
+				console.log("start save");
+				var obj = new timeObj();
+				for(var i = 1;i<=22;i++){
+					for(var j = 1;j<=5;j++){
+						if(i==22 && j==4)break;
+						var $span = $("img[src='photo/"+i+"-"+j+".png']").parent().find("span");
+						
+						obj[i+"-"+j] = $span.text();
+					}
+				}
+				console.log(JSON.stringify(obj));
+				storage.setItem("data",JSON.stringify(obj));
+				alert("save success!");
+			}
+
+			var clearData = function (){
+				storage.removeItem("data");
+				for(var i = 1;i<=22;i++){
+					for(var j = 1;j<=5;j++){
+						if(i==22 && j==4) break;
+						var $span = $("img[src='photo/"+i+"-"+j+".png']").parent().find("span");
+						$span.text(0);
+					}
+				}
+				alert("clear success!");
+			}
+
+			$("button[name='save']").click(saveData);
+			$("button[name='clear']").click(clearData);
+			$(window).unload(saveData);
+
+
 		});
 </script>
 </head>
@@ -207,8 +258,11 @@
 				<button name="page" class="btn">page2</button>
 				<button name="page" class="btn">page3</button>
 			</div>
-		</div>
-		
+			<div class="col-md-4" style="position:fixed;top:5px;left:360px;z-index:1">
+				<button name="save" class="btn btn-primary">save</button>
+				<button name="clear" class="btn btn-danger">clear</button>
+			</div>
+		</div>		
 	</div>
 </body>
 </html>
